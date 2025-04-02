@@ -26,7 +26,7 @@ jobs:
           --hidden-import=你的隐式依赖包名（如有）  # 可选 
  
     - name: Upload artifact 
-      uses: actions/upload-artifact@v3 
+      uses: actions/upload-artifact@v4
       with:
         name: mac-executable 
         path: dist/mac/MyApp 
