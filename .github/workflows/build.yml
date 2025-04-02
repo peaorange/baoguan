@@ -23,7 +23,7 @@ jobs:
     - name: Build executable 
       run: |
         pyinstaller --onefile --name baoguan_mac \
-        --add-data "src/baoguan_final.py:."  \
+        --add-data "src/baoguan_more_final.py:."  \
         src/baoguan_final.py  
  
     - name: Upload artifact 
