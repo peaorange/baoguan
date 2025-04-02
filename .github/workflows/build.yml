@@ -1,0 +1,29 @@
+name: Build macOS Executable 
+on: [push, release]
+
+jobs:
+  build:
+    runs-on: macos-latest 
+    steps:
+    - uses: actions/checkout@v4 
+    
+    - name: Set up Python 
+      uses: actions/setup-python@v4 
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies 
+      run: |
+        python -m pip install --upgrade pip 
+        pip install -r requirements.txt  
+
+    - name: Build executable 
+      run: |
+        chmod +x build_macos.sh  
+        ./build_macos.sh  
+
+    - name: Upload artifact 
+      uses: actions/upload-artifact@v4 
+      with:
+        name: baoguan-macos 
+        path: dist/macos/baoguan_macos 
