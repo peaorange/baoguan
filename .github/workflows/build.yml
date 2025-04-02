@@ -1,16 +1,14 @@
-name: Build Mac Executable 
- 
-on: [workflow_dispatch] # 手动触发 
+name: Build and Package 
+on: [push, release]
  
 jobs:
-  build:
+  package-for-mac:
     runs-on: macos-latest 
-    
     steps:
     - uses: actions/checkout@v4 
- 
+    
     - name: Set up Python 
-      uses: actions/setup-python@v5 
+      uses: actions/setup-python@v4 
       with:
         python-version: '3.10'
  
@@ -20,14 +18,15 @@ jobs:
         pip install pyinstaller 
         pip install -r requirements.txt  
  
-    - name: Build executable 
+    - name: PyInstaller打包 
       run: |
-        pyinstaller --onefile --name baoguan_mac \
-        --add-data "src/baoguan_more_final.py:."  \
-        src/baoguan_final.py  
+        pyinstaller --onefile src/baoguan_more_final.py  \
+          --name "MyApp" \
+          --distpath dist/mac \
+          --hidden-import=你的隐式依赖包名（如有）  # 可选 
  
     - name: Upload artifact 
-      uses: actions/upload-artifact@v4 
+      uses: actions/upload-artifact@v3 
       with:
         name: mac-executable 
-        path: dist/
+        path: dist/mac/MyApp 
